@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欢迎Red Spider Lily</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-image: url('./首页封面.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+        }
+
+        .logo {
+            width: 180px; 
+            margin-bottom: 25px;
+            border-radius: 50%; 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            background-color: white; 
+            padding: 10px; 
+        }
+        
+        .logo:hover {
+            transform: scale(1.1) rotate(5deg); 
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4); 
+        }
+
+        .gradient-text {
+            font-size: 3rem;
+            font-weight: bold;
+            background-image: linear-gradient(45deg, #d70e00, #f24900, #d77a00,#f2ee00,#b5f200,#00f200,#00f2a1,#00f2d2,#006df2,#2400f2,#7100f2,#ba00f2,#f200a9,#f20034);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-animation 2s linear infinite;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        /* --- 修改核心：容器交互效果 --- */
+        .container {
+            height: 800px;
+            width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 16px; 
+            text-align: center;
+
+            /* 1. 默认状态（鼠标移出时）：淡化内容，凸显背景 */
+            background-color: rgba(255, 255, 255, 0.05); /* 背景变得非常透明 */
+            backdrop-filter: blur(0px); /* 去除模糊，让背景图清晰可见 */
+            -webkit-backdrop-filter: blur(0px);
+            opacity: 0.0; /* 整体透明度降低，内容消失 */
+            border: 1px solid rgba(255, 255, 255, 0.1); /* 边框也变淡 */
+            transform: scale(0.98); /* 稍微缩小一点，增加呼吸感 */
+            
+            /* 添加平滑过渡动画，时间设为0.6秒 */
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 2. 悬停状态（鼠标移入时）：恢复清晰 */
+        .container:hover {
+            background-color: rgba(255, 255, 255, 0.25); /* 恢复白色半透明背景 */
+            backdrop-filter: blur(15px); /* 恢复毛玻璃模糊，虚化背景图 */
+            -webkit-backdrop-filter: blur(15px);
+            opacity: 1; /* 内容完全不透明 */
+            border: 1px solid rgba(255, 255, 255, 0.5); /* 边框变亮 */
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* 加上阴影 */
+            transform: scale(1); /* 恢复原大小 */
+        }
+        /* --- 修改结束 --- */
+
+        h1 {
+            color: #0078d7;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px; 
+            background-color: rgba(0, 120, 215, 0.9); 
+            color: white;
+            text-decoration: none;
+            border-radius: 30px; 
+            margin: 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn:hover {
+            background-color: #005a9e;
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin: 50px 0; 
+            flex-wrap: wrap;
+        }
+        .feature {
+            width: 30%;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.4);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .color-changing{
+            animation:colorChange 2s infinite;
+            font-weight: 800; 
+        }
+         @keyframes gradient-animation {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        @keyframes colorChange {
+            0%{color:#0078d7;}
+            25%{color:#e81123;}
+            50%{color:#107c10;}
+            75%{color: #ffb900;}
+            100%{color:#0078d7}
+        }
+        @media (max-width: 600px) {
+            .feature {
+                width: 100%;
+            }
+            .container {
+                width: 90%; 
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+   
+    <!-- 顶部登录/注册区域 -->
+    <div style="text-align: right; padding: 10px;">
+        <span id="userStatus">
+            <a href="登录页面.html" class="btn">登录</a>
+            <a href="注册页面.html" class="btn">注册</a>
+        </span>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="container">
+        <img src="./网站logo.png" alt="Logo" class="logo">
+        <h1 class="gradient-text">欢迎使用Red Spider Lily</h1>
+        <p style="font-size: 1.2em; font-weight: 500;">更快、更安全、更现代的浏览体验</p>
+        
+        <div class="features">
+            <div class="feature">
+                <h3 class="color-changing">快速</h3>
+                <p>基于Chromium引擎，提供更快的浏览速度</p>
+            </div>
+            <div class="feature">
+                <h3 class="color-changing">安全</h3>
+                <p>内置Microsoft Defender SmartScreen保护</p>
+            </div>
+            <div class="feature">
+                <h3 class="color-changing">现代</h3>
+                <p>支持最新Web标准和扩展程序</p>
+            </div>
+        </div>
+        
+        <button id="enterStoreBtn" class="btn">进入商城</button>
+        <button id="playPauseBtn" class="btn">播放音乐</button>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="./MY-ALL.mp3" type="audio/mpeg">
+        您的浏览器不支持audio标签
+    </audio>
+
+    <script src="认证逻辑.js"></script>
+
+    <script>
+        window.logout = function() {
+            if(confirm('确定要退出登录吗？')) {
+                localStorage.removeItem('currentUser');
+                window.location.reload();
+            }
+        };
+
+        function updateUserStatus() {
+            const userStatus = document.getElementById('userStatus');
+            const currentUserStr = localStorage.getItem('currentUser');
+            
+            if (currentUserStr) {
+                const user = JSON.parse(currentUserStr);
+                const displayName = user.email || user.username || '用户';
+                
+                userStatus.innerHTML = `
+                    <span style="margin-right:10px; font-weight:bold; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">欢迎，${displayName}！</span>
+                    <a href="javascript:logout()" class="btn" style="background-color:#d70e00;">退出</a>
+                `;
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            updateUserStatus();
+
+            const storeBtn = document.getElementById('enterStoreBtn');
+            if (storeBtn) {
+                storeBtn.addEventListener('click', () => {
+                    const isLoggedIn = localStorage.getItem('currentUser');
+                    if (!isLoggedIn) {
+                        alert('请先登录后再进入商城！');
+                        window.location.href = '登录页面.html';
+                    } else {
+                        window.location.href = '商品页面.html';
+                    }
+                });
+            }
+
+            const music = document.getElementById('bgMusic');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            
+            function updateButtonUI() {
+                playPauseBtn.textContent = music.paused ? '播放音乐' : '暂停音乐';
+            }
+            
+            if (playPauseBtn && music) {
+                playPauseBtn.addEventListener('click', async () => {
+                    if (music.paused) {
+                        try {
+                            await music.play();
+                            updateButtonUI();
+                        } catch (err) {
+                            console.error('播放失败:', err);
+                            alert('播放失败，请检查音乐文件是否存在');
+                        }
+                    } else {
+                        music.pause();
+                        updateButtonUI();
+                    }
+                });
+                updateButtonUI();
+            }
+        });
+    </script>
+
+</body>
+</html>
