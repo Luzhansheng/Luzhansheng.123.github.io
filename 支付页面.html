@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>收银台 - Red Spider Lily</title>
+<style>
+  body {
+    font-family: "Microsoft YaHei", Arial, sans-serif;
+    background-color: #0e0e0e;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .header {
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  h1 {
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  .order-info {
+    background-color: #1c1c1c;
+    padding: 20px 40px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    text-align: center;
+    border: 1px solid #333;
+    min-width: 300px;
+  }
+
+  .total-label {
+    color: #888;
+    font-size: 14px;
+  }
+
+  .total-price {
+    color: #ffcc00;
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+
+  /* 支付方式容器 */
+  .payment-container {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .pay-card {
+    background-color: #fff;
+    width: 260px;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    color: #333;
+    transition: transform 0.3s;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+
+  .pay-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  }
+
+  .pay-card.wechat {
+    border-top: 5px solid #09bb07;
+  }
+
+  .pay-card.alipay {
+    border-top: 5px solid #00a0e9;
+  }
+
+  .pay-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  /* --- 新增：二维码图片样式 --- */
+  .qr-code {
+    margin: 10px auto;
+    width: 180px;  /* 控制二维码容器宽度 */
+    height: 180px; /* 控制二维码容器高度 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .qr-code img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 保持图片比例 */
+  }
+  /* ------------------------- */
+  
+  .scan-tip {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
+  }
+
+  /* 支付成功遮罩层 */
+  #success-modal {
+    display: none; /* 默认隐藏 */
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .success-box {
+    background: #1c1c1c;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid #00ff00;
+    animation: popIn 0.3s ease;
+    color: white;
+    min-width: 300px;
+  }
+  .check-icon {
+    font-size: 60px;
+    color: #00ff00;
+    margin-bottom: 20px;
+  }
+  @keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .btn-back {
+      margin-top: 50px;
+      color: #888;
+      text-decoration: none;
+      font-size: 14px;
+  }
+  .btn-back:hover { color: #fff; }
+
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>收银台</h1>
+    <p>请选择支付方式完成订单</p>
+  </div>
+
+  <div class="order-info">
+    <div class="total-label">订单总额</div>
+    <div class="total-price" id="display-price">计算中...</div>
+  </div>
+
+  <div class="payment-container">
+    <!-- 微信支付 -->
+    <div class="pay-card wechat" onclick="simulatePay('微信支付')">
+      <div class="pay-title" style="color: #09bb07;">
+        <span>微信支付</span>
+      </div>
+      
+      <!-- 修改处：添加了 img 标签 -->
+      <div class="qr-code">
+        <!-- 请将 'wechat_qr.png' 替换为你实际的图片文件名或路径 -->
+        <img src="微信收款码.png" alt="微信支付二维码">
+      </div>
+
+      <div class="scan-tip">点击此处扫码支付</div>
+    </div>
+
+    <!-- 支付宝 -->
+    <div class="pay-card alipay" onclick="simulatePay('支付宝')">
+      <div class="pay-title" style="color: #00a0e9;">
+        <span>支付宝</span>
+      </div>
+      
+      <!-- 修改处：添加了 img 标签 -->
+      <div class="qr-code">
+        <!-- 请将 'alipay_qr.png' 替换为你实际的图片文件名或路径 -->
+        <img src="支付宝收款码.png" alt="支付宝二维码">
+      </div>
+
+      <div class="scan-tip">点击此处扫码支付</div>
+    </div>
+  </div>
+
+  <a href="购物车模块.html" class="btn-back"> < 返回购物车</a>
+
+  <!-- 支付状态遮罩层 -->
+  <div id="success-modal">
+    <div class="success-box">
+        <!-- 内容会由JS动态填充 -->
+    </div>
+  </div>
+
+<script>
+    // 1. 初始化：计算并显示总金额
+    document.addEventListener('DOMContentLoaded', () => {
+        const cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+        const displayPrice = document.getElementById('display-price');
+        
+        // 安全检查：如果购物车为空，踢回首页
+        if (cart.length === 0) {
+            alert('购物车为空，无法进行支付');
+            window.location.href = 'index.html';
+            return;
+        }
+
+        // 计算总价
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        displayPrice.innerText = '¥ ' + total.toLocaleString();
+    });
+
+    // 2. 核心逻辑：模拟支付与订单生成
+    function simulatePay(method) {
+        if(!confirm(`确定使用【${method}】支付吗？`)) return;
+
+        // 获取遮罩层元素
+        const modal = document.getElementById('success-modal');
+        const modalContent = modal.querySelector('.success-box');
+        
+        // A. 显示“正在处理”状态
+        modalContent.innerHTML = `
+            <h2 style="color:#fff; margin:0;">正在连接支付网关...</h2>
+            <p style="color:#aaa; margin-top:10px;">请勿关闭页面</p>
+        `;
+        modal.style.display = 'flex';
+
+        // B. 模拟网络延迟 (2秒)
+        setTimeout(() => {
+            // C. 显示“支付成功”状态
+            modalContent.innerHTML = `
+                <div class="check-icon">✔</div>
+                <h2 style="margin:0;">支付成功！</h2>
+                <p style="color:#aaa; margin-top:10px;">正在为您生成订单...</p>
+            `;
+            
+            // --- 数据处理开始 ---
+            
+            // 1. 获取当前数据
+            const cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+            const currentUser = JSON.parse(localStorage.getItem('currentUser')) || { username: '游客' };
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            // 2. 构建新订单对象
+            const newOrder = {
+                orderId: 'ORD-' + Date.now(), // 使用时间戳生成唯一订单号
+                date: new Date().toLocaleString(), // 当前时间
+                items: cart, // 购买的商品列表
+                total: total, // 总价
+                paymentMethod: method, // 支付方式
+                user: currentUser.username // 绑定当前用户
+            };
+
+            // 3. 保存到历史订单 (orderHistory)
+            const orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+            orderHistory.unshift(newOrder); // 把最新订单加到数组最前面
+            localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+
+            // 4. 清空购物车 (支付成功了，购物车就该空了)
+            localStorage.removeItem('shoppingCart');
+
+            // --- 数据处理结束 ---
+
+            // D. 延迟跳转到“我的订单”页面
+            setTimeout(() => {
+                window.location.href = '购物车模块.html';
+            }, 1500);
+
+        }, 2000); // 2000毫秒 = 2秒
+    }
+</script>
+
+</body>
+</html>

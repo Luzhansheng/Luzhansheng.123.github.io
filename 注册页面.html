@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册 - Red Spider Lily</title>
+    <link rel="stylesheet" href="认证页面样式.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 背景层（伪元素） */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('注册背景图.jpg') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(0px);
+            opacity: 1;
+            transition: filter 1s ease, opacity 1s ease;
+            z-index: -1;
+        }
+
+        /* 注册框样式 */
+        .auth-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+            transition: opacity 1s ease, transform 0.8s ease;
+        }
+
+        /* 注册框淡出样式 */
+        .fade-out {
+            opacity: 0;
+            transform: scale(0.95); /* 淡出时轻微缩小 */
+        }
+
+        /* 背景模糊类 */
+        body.bg-blur::before {
+            filter: blur(5px);
+            opacity: 0.6;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input:focus {
+            border-color: #c33;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #c33;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .auth-btn:hover {
+            background-color: #a11;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container" id="authContainer">
+        <div class="auth-header">
+            <h1>创建账户</h1>
+            <p>加入Red Spider Lily社区</p>
+        </div>
+        
+        <form id="registerForm" class="auth-form">
+            <div class="form-group">
+                <label for="registerUsername">用户名</label>
+                <input type="text" id="registerUsername" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="registerEmail">电子邮箱</label>
+                <input type="email" id="registerEmail" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="registerPassword">密码</label>
+                <input type="password" id="registerPassword" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">确认密码</label>
+                <input type="password" id="confirmPassword" required>
+            </div>
+            
+            <button type="submit" class="auth-btn">注册</button>
+        </form>
+        
+        <div class="auth-footer">
+            <p>已有账户？ <a href="登录页面.html">立即登录</a></p>
+            <p><a href="index.html">返回首页</a></p>
+        </div>
+    </div>
+
+    <script>
+        const authContainer = document.getElementById('authContainer');
+
+        // 鼠标移入注册框
+        authContainer.addEventListener('mouseenter', () => {
+            document.body.classList.add('bg-blur');        // 背景模糊淡化
+            authContainer.classList.remove('fade-out');    // 确保注册框可见
+        });
+
+        // 鼠标移出注册框
+        authContainer.addEventListener('mouseleave', () => {
+            document.body.classList.remove('bg-blur');     // 背景恢复清晰
+            authContainer.classList.add('fade-out');       // 注册框淡出不可见
+        });
+    </script>
+</body>
+</html>
